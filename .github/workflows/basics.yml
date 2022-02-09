@@ -11,7 +11,7 @@ jobs:
     
     steps:
       - name: Print Hello Message in testing_level
-        run: echo "Hello World from "testing_level"
+        run: echo "Hello World from 'testing_level'"
         
       - name: Check aws-cli version
         run: aws --version
