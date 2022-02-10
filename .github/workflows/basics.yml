@@ -25,7 +25,4 @@ jobs:
 # It is an official GitHub Action used to check-out a repository so a workflow can access it.
         
       - name: Create ZIP deployment package
-        run: zip -r ${{ env.Deploy_Package_Name }} ./ -x *.git*
- 
-  ci_part:
-    runs-on: ubuntu-latest
+        run: zip -r ${{ env.Deploy_Package_Name }} ./ -x *.git
