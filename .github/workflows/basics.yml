@@ -1,7 +1,7 @@
 # GitHub actions CI/CD pipeline to AWS.
 
 name: My-GitHubActions-Basics
-evn:
+env:
   ElasticBeanstalk_Package_S3: "blade-runner-pipeline"
   ElasticBeanstalk_AppName   : "Test-Pipeline"
   ElasticBeanstalk_EnvName   : "Test-Pipeline-Env"
