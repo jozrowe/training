@@ -41,3 +41,31 @@ jobs:
 
       - name: Finish message
         run: echo "CI Pipeline finished without issues (but who knows :D)"
+
+  cd_part:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Configure AWS Credentials
+# GitHub script for configuring AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id    :  ${{ secrets.MY_AWS_ACCESS_KEY }}
+          aws-secret-access-key:  ${{ secrets.MY_AWS_SECRET_KEY }}
+          aws-region           :  ${{ env.AWS_REGION_NAME }}
+
+      - name: Create new ElasticBeanstalk Application Version
+        run : |
+          aws elasticbeanstalk create-application-version \
+          --application-name ${{ env.ElasticBeanstalk_AppName }} \
+          --source-bundle S3Bucket="${{ env.ElasticBeanstalk_Package_S3 }}",S3Key="${{ env.DEPLOY_PACKAGE_NAME }}" \
+          --version-label "Ver-${{ github.sha }}" \
+          --description "CoimmitSHA-${{ github.sha }}"
+       
+      - name: Deploy new ElasticBeanstalk Application Version
+        run : aws elasticbeanstalk update-environment --environment-name ${{ env.ElasticBeanstalk_EnvName }} --version-label "Ver-${{ github.sha }}"
+      
+      
+      - name: Finish message
+        run: echo "CD Pipeline finished without issues (probably :D)"
