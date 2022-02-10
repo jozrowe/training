@@ -4,7 +4,7 @@ name: My-GitHubActions-Basics
 env:
   ElasticBeanstalk_Package_S3: "blade-runner-pipeline"
   ElasticBeanstalk_AppName   : "Test-Pipeline"
-  ElasticBeanstalk_EnvName   : "Test-Pipeline-Env"
+  ElasticBeanstalk_EnvName   : "Testpipeline-env"
   DEPLOY_PACKAGE_NAME        : "test_pipeline_${{ github.sha }}.zip"
   AWS_REGION_NAME            : "eu-north-1"
   
