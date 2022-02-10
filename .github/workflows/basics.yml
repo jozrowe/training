@@ -1,18 +1,31 @@
-# This is a basic workflow to help you get started with Actions
+# GitHub actions CI/CD pipeline to AWS.
 
 name: My-GitHubActions-Basics
+evn:
+  ElasticBeanstalk_Package_S3: "blade-runner-pipeline"
+  ElasticBeanstalk_AppName   : "Test-Pipeline"
+  ElasticBeanstalk_EnvName   : "Test-Pipeline-Env"
+  Deploy_Package_Name        : "test_pipeline_${{ github.sha }}.zip"
+  AWS_REGION_NAME            : "eu-north-1"
+  
+# github.sha = The commit SHA that triggered the workflow run.
+
 on:
   push:
     branches: 
       - master
 jobs:
-  testing_level:
+  ci_part:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Print Hello Message in testing_level
-        run: echo "Hello World from 'testing_level'"
+      - name: Git Clone our repo
+        uses: actions/checkout@v1
+
+# It is an official GitHub Action used to check-out a repository so a workflow can access it.
         
-      - name: Check aws-cli version
-        run: aws --version
+      - name: Create ZIP deployment package
+        run: zip -r ${{ env.Deploy_Package_Name }} ./ -x *.git*
  
+  ci_part:
+    runs-on: ubuntu-latest
